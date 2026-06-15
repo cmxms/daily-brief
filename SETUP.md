@@ -1,16 +1,22 @@
-# Daily Brief — Setup
+# Daily Brief — Setup (run locally)
 
-A self-contained tool that writes a daily market brief and publishes it to Substack on a
-free cloud schedule. ~$1–3/month of Claude API; everything else is free tier.
+A self-contained tool that writes a daily market brief and posts it to your Substack as a
+**draft** each weekday morning, on a local schedule. ~$5–8/month of Claude API; everything else
+is free tier.
+
+> **Why local (not the cloud)?** Substack's API sits behind Cloudflare, which blocks datacenter
+> IPs — so posting from GitHub Actions (or any cloud runner) fails with a bot-challenge. From your
+> own machine's IP it works fine. So this runs as a local scheduled task. (The data-gathering and
+> AI-writing steps would run anywhere; it's only the Substack post that needs a residential IP.)
 
 ## What runs each morning
-`run.py` does three steps: **gather** (live data: index futures, macro, sector ETFs,
-dealer-gamma, the economic calendar, overnight headlines) → **write** (Claude reads the data,
-web-searches the *why*, writes the brief) → **post** (emails it to Substack as a draft).
+`run.py` does three steps: **gather** (live data: index futures, macro, sector ETFs, dealer-gamma,
+the economic calendar, overnight headlines) → **write** (Claude reads the data, web-searches the
+*why*, writes the brief) → **post** (logs into Substack and creates a **draft** you review + publish).
 
 ---
 
-## One-time setup (~30 min)
+## Setup (~20 min, one time)
 
 ### 1. Get the keys
 | Service | Cost | What for | Where |
@@ -19,47 +25,53 @@ web-searches the *why*, writes the brief) → **post** (emails it to Substack as
 | Tradier | free brokerage acct | live prices + dealer-gamma | tradier.com (no funding needed) |
 | Finnhub | free tier | overnight headlines | finnhub.io |
 
-### 2. Substack account (login-based posting)
-Posting uses `python-substack`, which logs into your Substack account and creates a **draft**.
-You need three things: your publication URL (e.g. `https://yourname.substack.com`), your
-Substack **login email**, and your **password**. No "publish via email" address required.
+Plus your **Substack** publication URL, login **email**, and **password** (posting logs in and
+creates a draft — no "publish via email" needed).
 
-### 3. Put it on GitHub
-1. Create a repo and push this `daily-brief/` folder (or the whole thing).
-2. Repo → **Settings → Secrets and variables → Actions → New repository secret**, add:
-   `ANTHROPIC_API_KEY`, `TRADIER_API_KEY`, `FINNHUB_API_KEY`, `SUBSTACK_PUBLICATION_URL`,
-   `SUBSTACK_EMAIL`, `SUBSTACK_PASSWORD`. (Secrets never live in the code.)
-3. The schedule is in `.github/workflows/daily-brief.yml` (`cron: "30 10 * * 1-5"` ≈ 6:30 AM
-   ET in summer). Edit the time if you like.
-4. **Test it now:** Actions tab → *daily-brief* → **Run workflow**. Check the run log and your
-   Substack drafts.
-
----
-
-## Test locally first (recommended)
+### 2. Install
 ```
 cd daily-brief
-python -m pip install -r requirements.txt
-cp .env.example .env          # fill in your keys
-python run.py --gather-only   # 1) just the data — no API cost, confirms data sources work
-python run.py                 # 2) gather + write, prints the brief, saves to out/. No posting.
-python run.py --post          # 3) the whole thing — emails a draft to Substack
+python -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt
+copy .env.example .env
 ```
-`out/<date>.brief.md` is the finished brief; `out/<date>.data.md` is the raw data it was built
-from. Once the local `--post` lands a clean draft, flip on the GitHub Actions schedule.
+Then open `.env` and paste in your keys (it's gitignored — never committed).
+
+### 3. Test by hand first
+```
+.venv\Scripts\python run.py --gather-only   # just the data — no API cost, confirms sources work
+.venv\Scripts\python run.py                 # gather + write, prints the brief to out\. No posting.
+.venv\Scripts\python run.py --post          # the whole thing — creates a Substack draft
+```
+Check `out\<date>.brief.md` (the brief) and your Substack **drafts**. Once a clean draft lands,
+schedule it.
+
+### 4. Schedule it (weekday mornings)
+```
+powershell -ExecutionPolicy Bypass -File register_task.ps1 -Time "06:45"
+```
+That registers a Windows task **DailyBrief** that runs `run_brief.bat` every weekday at your chosen
+time (catches up if the PC was off). Useful commands:
+```
+Start-ScheduledTask -TaskName DailyBrief                       # run it now to test
+Unregister-ScheduledTask -TaskName DailyBrief -Confirm:$false  # remove it
+```
+Each run appends to `out\run.log`. **The PC must be on at run time** (it's a local task). Pick a
+morning time (~6–9 AM ET is ideal — the brief is built on US pre-market data — but any morning works
+since you review the draft before publishing).
 
 ---
 
 ## Notes
-- **Draft, not auto-publish.** `python-substack` creates a draft you approve. That's the safe
-  default for the first couple of weeks. (Substack login can occasionally trip bot-protection;
-  if a run fails to log in, sign in once in a browser, then retry.)
+- **Draft, not auto-publish.** It creates a draft you approve — safe by default. (Substack login can
+  occasionally trip bot-protection; if a run fails to log in, sign into Substack once in a browser,
+  then retry.)
 - **GEX is prior-session pre-market.** Options don't trade overnight, so the dealer-gamma read
   reflects the prior close; the brief labels it that way.
 - **Headlines lag 20–60 min** on Finnhub's free tier — fine for a morning look-back.
+- **Glance before publishing.** The writer web-searches for the "why" — eyeball any specific factual
+  claim before you hit Publish.
 - **Calendar refresh.** `t1_calendar.yaml` (Fed/CPI/jobs dates) needs a 5-minute refresh once a
   quarter from the official sources noted at the top of that file.
-- **Never invent a number.** The writer is instructed to use only fetched figures and to flag
-  anything stale; if a data source hiccups it says so rather than guessing.
-- **Model.** Defaults to `claude-opus-4-8`. Set the `BRIEF_MODEL` secret to a cheaper model
-  (e.g. `claude-sonnet-4-6`) if you want to trim cost.
+- **Model / cost.** Defaults to `claude-opus-4-8` (~$0.35/brief, mostly the web search). Set
+  `BRIEF_MODEL=claude-sonnet-4-6` in `.env` to roughly halve it.

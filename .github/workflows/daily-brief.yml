@@ -1,12 +1,11 @@
 name: daily-brief
 
-# Runs every weekday morning and publishes the brief to Substack (as a draft).
-# Cron is UTC. 10:30 UTC ≈ 6:30 AM ET during EDT (summer) / 5:30 AM ET during EST
-# (winter). Adjust the minute/hour if you want a different local time, and note the
-# 1-hour DST shift. You can also trigger it by hand from the Actions tab.
+# NOTE: posting to Substack CANNOT run from GitHub Actions — Substack's API is behind
+# Cloudflare, which blocks datacenter IPs (the runner gets a 403 "Just a moment..."
+# challenge, valid cookie or not). Run this tool LOCALLY on a schedule instead — see
+# SETUP.md (register_task.ps1). The auto cron is therefore disabled; this workflow is
+# left only as a manual gather+write preview (the post step still fails in the cloud).
 on:
-  schedule:
-    - cron: "30 10 * * 1-5"
   workflow_dispatch: {}
 
 jobs:
