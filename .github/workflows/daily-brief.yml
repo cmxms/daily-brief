@@ -26,6 +26,8 @@ jobs:
           TRADIER_API_KEY: ${{ secrets.TRADIER_API_KEY }}
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
           SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
+          # Cookie auth (works from datacenter IPs); email/password is the local fallback.
+          SUBSTACK_COOKIES: ${{ secrets.SUBSTACK_COOKIES }}
           SUBSTACK_EMAIL: ${{ secrets.SUBSTACK_EMAIL }}
           SUBSTACK_PASSWORD: ${{ secrets.SUBSTACK_PASSWORD }}
           # Optional: BRIEF_MODEL to override the writer model.

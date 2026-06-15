@@ -58,15 +58,24 @@ def split_title(brief_md: str) -> tuple[str, str]:
 
 
 def post(brief_md: str, publish: bool = False) -> str:
+    cookies = os.environ.get("SUBSTACK_COOKIES", "").strip()
     email = os.environ.get("SUBSTACK_EMAIL", "").strip()
     password = os.environ.get("SUBSTACK_PASSWORD", "").strip()
     pub_url = os.environ.get("SUBSTACK_PUBLICATION_URL", "").strip().rstrip("/")
-    missing = [n for n, v in [("SUBSTACK_EMAIL", email), ("SUBSTACK_PASSWORD", password),
-                              ("SUBSTACK_PUBLICATION_URL", pub_url)] if not v]
-    if missing:
-        raise RuntimeError(f"missing env for posting: {', '.join(missing)}")
+    if not pub_url:
+        raise RuntimeError("missing env for posting: SUBSTACK_PUBLICATION_URL")
 
-    api = Api(email=email, password=password, publication_url=pub_url)
+    # Prefer COOKIE auth. Email/password login is blocked by Cloudflare from
+    # datacenter IPs (GitHub Actions runners get a 403 "Just a moment..." challenge),
+    # so the cloud must reuse a session cookie captured from a residential IP. Run
+    # `python capture_cookies.py` locally to mint the SUBSTACK_COOKIES secret; refresh
+    # it if cloud posting later starts 403-ing (Substack cookies expire eventually).
+    if cookies:
+        api = Api(cookies_string=cookies, publication_url=pub_url)
+    elif email and password:
+        api = Api(email=email, password=password, publication_url=pub_url)
+    else:
+        raise RuntimeError("need SUBSTACK_COOKIES, or SUBSTACK_EMAIL + SUBSTACK_PASSWORD")
     user_id = api.get_user_id()
 
     title, body_md = split_title(brief_md)
