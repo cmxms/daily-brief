@@ -1,0 +1,42 @@
+name: daily-brief
+
+# Runs every weekday morning and publishes the brief to Substack (as a draft).
+# Cron is UTC. 10:30 UTC ≈ 6:30 AM ET during EDT (summer) / 5:30 AM ET during EST
+# (winter). Adjust the minute/hour if you want a different local time, and note the
+# 1-hour DST shift. You can also trigger it by hand from the Actions tab.
+on:
+  schedule:
+    - cron: "30 10 * * 1-5"
+  workflow_dispatch: {}
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: daily-brief
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Gather + write + post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TRADIER_API_KEY: ${{ secrets.TRADIER_API_KEY }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
+          SUBSTACK_EMAIL: ${{ secrets.SUBSTACK_EMAIL }}
+          SUBSTACK_PASSWORD: ${{ secrets.SUBSTACK_PASSWORD }}
+          # Optional: BRIEF_MODEL to override the writer model.
+        run: python run.py --post
+      - name: Upload the brief as an artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: brief
+          path: daily-brief/out/
+          if-no-files-found: ignore

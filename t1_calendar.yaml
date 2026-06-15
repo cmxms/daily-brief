@@ -1,0 +1,125 @@
+# Authoritative T1 economic event calendar (bundled with the daily-brief package).
+# Re-verify quarterly against the official sources below. Times are America/New_York (ET).
+#
+#   FOMC:  https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm
+#   Empl:  https://www.bls.gov/schedule/news_release/empsit.htm
+#   CPI:   https://www.bls.gov/schedule/news_release/cpi.htm
+#
+# Last updated: 2026-05-25 (remainder of 2026 + early 2027 stub).
+
+events:
+  # === FOMC RATE DECISIONS (14:00 ET) ===
+  - name: "FOMC Meeting"
+    date: 2026-06-17
+    time_et: "14:00"
+    verified: true
+  - name: "FOMC Meeting"
+    date: 2026-07-29
+    time_et: "14:00"
+    verified: true
+  - name: "FOMC Meeting"
+    date: 2026-09-16
+    time_et: "14:00"
+    verified: true
+  - name: "FOMC Meeting"
+    date: 2026-10-28
+    time_et: "14:00"
+    verified: true
+  - name: "FOMC Meeting"
+    date: 2026-12-09
+    time_et: "14:00"
+    verified: true
+  - name: "FOMC Meeting"
+    date: 2027-01-27
+    time_et: "14:00"
+    verified: true
+
+  # === FOMC MINUTES (3 weeks after each meeting, 14:00 ET — ESTIMATED for H2) ===
+  - name: "FOMC Minutes"
+    date: 2026-07-08
+    time_et: "14:00"
+    verified: false
+  - name: "FOMC Minutes"
+    date: 2026-08-19
+    time_et: "14:00"
+    verified: false
+  - name: "FOMC Minutes"
+    date: 2026-10-07
+    time_et: "14:00"
+    verified: false
+  - name: "FOMC Minutes"
+    date: 2026-11-18
+    time_et: "14:00"
+    verified: false
+  - name: "FOMC Minutes"
+    date: 2026-12-30
+    time_et: "14:00"
+    verified: false
+  - name: "FOMC Minutes"
+    date: 2027-02-17
+    time_et: "14:00"
+    verified: false
+
+  # === EMPLOYMENT SITUATION (BLS, 08:30 ET) ===
+  - name: "Employment Situation"
+    date: 2026-06-05
+    time_et: "08:30"
+    verified: true
+  - name: "Employment Situation"
+    date: 2026-07-02
+    time_et: "08:30"
+    verified: true
+  - name: "Employment Situation"
+    date: 2026-08-07
+    time_et: "08:30"
+    verified: true
+  - name: "Employment Situation"
+    date: 2026-09-04
+    time_et: "08:30"
+    verified: true
+  - name: "Employment Situation"
+    date: 2026-10-02
+    time_et: "08:30"
+    verified: false
+  - name: "Employment Situation"
+    date: 2026-11-06
+    time_et: "08:30"
+    verified: false
+  - name: "Employment Situation"
+    date: 2026-12-04
+    time_et: "08:30"
+    verified: false
+  - name: "Employment Situation"
+    date: 2027-01-08
+    time_et: "08:30"
+    verified: false
+
+  # === CPI (BLS, 08:30 ET) ===
+  - name: "CPI"
+    date: 2026-06-10
+    time_et: "08:30"
+    verified: true
+  - name: "CPI"
+    date: 2026-07-14
+    time_et: "08:30"
+    verified: true
+  - name: "CPI"
+    date: 2026-08-12
+    time_et: "08:30"
+    verified: true
+  - name: "CPI"
+    date: 2026-09-11
+    time_et: "08:30"
+    verified: true
+  - name: "CPI"
+    date: 2026-10-14
+    time_et: "08:30"
+    verified: true
+  - name: "CPI"
+    date: 2026-11-10
+    time_et: "08:30"
+    verified: true
+  - name: "CPI"
+    date: 2026-12-10
+    time_et: "08:30"
+    verified: true

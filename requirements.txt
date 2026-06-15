@@ -1,0 +1,6 @@
+# Pinned so a surprise upstream release can't silently break the 6 AM job.
+anthropic==0.74.0
+yfinance==0.2.66
+requests==2.32.3
+PyYAML==6.0.2
+python-substack==0.1.22
