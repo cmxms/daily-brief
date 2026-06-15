@@ -45,6 +45,49 @@ def _load_dotenv() -> None:
 _load_dotenv()
 
 
+def _smart_title(s: str) -> str:
+    """Title-Case a heading while preserving all-caps tokens (SPY, VIX, US) and
+    tokens with digits (24h, VIX9D), and leaving emoji/punctuation alone."""
+    def cap(w: str) -> str:
+        letters = [c for c in w if c.isalpha()]
+        if letters and all(c.isupper() for c in letters):
+            return w                       # SPY, US, AI -> keep
+        if any(c.isdigit() for c in w):
+            return w                        # 24h, VIX9D -> keep
+        for i, c in enumerate(w):
+            if c.isalpha():
+                return w[:i] + c.upper() + w[i + 1:]
+        return w                            # emoji / punctuation
+    return " ".join(cap(w) for w in s.split(" "))
+
+
+def _normalize_md(md: str) -> str:
+    """Guarantee a blank line before and after each heading line — otherwise
+    python-substack's from_markdown merges the heading with the next paragraph
+    (and stops parsing **bold** inside it)."""
+    lines = md.split("\n")
+    out: list[str] = []
+    for i, ln in enumerate(lines):
+        is_head = ln.lstrip().startswith("#")
+        if is_head and out and out[-1].strip() != "":
+            out.append("")
+        out.append(ln)
+        if is_head and i + 1 < len(lines) and lines[i + 1].strip() != "":
+            out.append("")
+    return "\n".join(out)
+
+
+def _polish_headings(body: dict) -> None:
+    """from_markdown emits huge level-2, lower-case headings. Shrink to level 3
+    and Title-Case the text in place."""
+    for node in body.get("content", []):
+        if node.get("type") == "heading":
+            node.setdefault("attrs", {})["level"] = 3
+            for t in node.get("content", []):
+                if t.get("type") == "text":
+                    t["text"] = _smart_title(t["text"])
+
+
 def split_title(brief_md: str) -> tuple[str, str]:
     """First '# ...' line -> post title; the rest -> body markdown."""
     lines = brief_md.splitlines()
@@ -82,7 +125,8 @@ def post(brief_md: str, publish: bool = False) -> str:
     p = Post(title=title,
              subtitle="Daily market situational awareness — not financial advice.",
              user_id=user_id)
-    p.from_markdown(body_md, api=api)
+    p.from_markdown(_normalize_md(body_md), api=api)
+    _polish_headings(p.draft_body)
 
     draft = api.post_draft(p.get_draft())
     draft_id = draft.get("id")
