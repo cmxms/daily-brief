@@ -20,7 +20,7 @@ PLAYBOOK = HERE / "playbook.md"
 MODEL = os.environ.get("BRIEF_MODEL", "claude-opus-4-8")
 # Server-side web search. Built-in result filtering; no beta header needed. max_uses
 # bounds cost (~$0.01/search) — a handful of targeted queries is plenty for a brief.
-WEB_SEARCH_TOOL = {"type": "web_search_20260209", "name": "web_search", "max_uses": 6}
+WEB_SEARCH_TOOL = {"type": "web_search_20260209", "name": "web_search", "max_uses": 8}
 
 
 def write_brief(data_block_md: str) -> str:
