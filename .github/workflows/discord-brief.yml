@@ -1,0 +1,42 @@
+name: discord-brief
+
+# Fully autonomous: gather -> write (Claude + web search) -> post to Discord.
+# Unlike the Substack path, Discord webhooks are NOT blocked from datacenter IPs, so this
+# runs end-to-end in the cloud on a free schedule. Set DISCORD_WEBHOOK_URL (+ the three API
+# keys) as repo Secrets. Trigger manually anytime via "Run workflow" (workflow_dispatch).
+
+on:
+  schedule:
+    # 12:45 UTC = 8:45 AM ET during EDT (summer, UTC-4). Mon-Fri only; --skip-holidays
+    # makes market-holiday runs a no-op. NOTE: in EST (winter, UTC-5) 12:45 UTC = 7:45 ET
+    # — change to "45 13 * * 1-5" when the US is on standard time. GitHub cron is best-effort
+    # and can fire a few minutes late under load (which only helps data freshness here).
+    - cron: "45 12 * * 1-5"
+  workflow_dispatch: {}
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Gather + write + post to Discord
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TRADIER_API_KEY: ${{ secrets.TRADIER_API_KEY }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          # Optional: BRIEF_MODEL to override the writer model.
+        run: python run.py --discord --skip-holidays
+      - name: Upload the brief as an artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: brief
+          path: out/
+          if-no-files-found: ignore
