@@ -1,99 +1,65 @@
 # ☀️ Morning Brief — Fri June 26, 2026
-
-**TL;DR:** The dominant catalyst is yesterday's hot PCE print — headline inflation hit **4.1% YoY, a 3-year high**, on top of a Fed that just flipped its dot plot toward a *hike*. Rate-sensitive growth took the brunt: Nasdaq futures (NQ) lagged badly at **-1.55%** while the Dow (YM) held near flat at **-0.23%**. The bullish counterweight: oil cratered **-3.2%** as an Iran nuclear deal eased the energy shock that's been driving inflation, and Treasury yields actually *fell* across the curve. Under the surface it's a textbook risk-off rotation — defensives (health care, utilities) and semis leading, software and growth bleeding. Dealer gamma is **negative** in both SPY and QQQ (prior-session snapshot), so moves can extend; watch the SPY 730/739 rails and the UMich sentiment final at 10:00 ET.
+**TL;DR:** Headline indices look calm, but that's a mask — under the surface this is a defensive rotation: money is fleeing semis and tech (SMH down hard) into health care, utilities, staples and real estate. The Fed's preferred inflation gauge ran hot in *yesterday's* PCE report, yet yields fell across the curve today, suggesting growth/AI-spend worries are outweighing inflation fear. Oil cratered ~4% as an Iran deal eased supply anxiety, even as Strait of Hormuz incidents keep a wildcard alive. Both SPY and QQQ sit in **negative-gamma** territory (prior-session snapshot) near tight walls, so moves can get amplified. No major 8:30 ET data printed this morning — the calendar reloads with payrolls next week.
 
 ## 📰 Last 24h — what happened & why
+First, the calendar housekeeping: I searched for a high-impact US release this morning and there wasn't one at 8:30 ET — the big inflation print landed **yesterday (June 25)**, not today. It matters because it's the backdrop for the tape. 
+Core PCE — the Fed's preferred inflation measure, which excludes food and energy — rose to 3.40% in May from 3.30% in April of 2026.
+ 
+Headline PCE accelerated to 4.10% in May from 3.80% in April.
+ That's the *opposite* of disinflation, which normally argues against rate cuts — yet Treasury yields fell hard today (more below). When inflation is sticky but bonds rally anyway, the market is usually pricing growth worry over inflation worry.
 
-The macro story owns the tape. Yesterday's **Personal Income & Outlays** report (released Thursday, June 25) was hot: 
-the PCE index showed inflation running at a seasonally adjusted 4.1% annual rate, the highest since April 2023; on a monthly basis, the PCE accelerated 0.4%
-. The core reading was no relief — 
-excluding food and energy, the personal consumption expenditures price index showed a 3.4% annual rate after rising 0.3% for the month, both in line with the Dow Jones consensus; the annual core reading was the highest since October 2023.
+The growth worry has a face: **semiconductors and AI capex**. SMH (semis) is the worst thing on the board, and the dominant narrative is a shift in how AI is being built — headlines flag that **OpenAI and Anthropic-era buyers are moving from "tokenmaxxing" (raw compute at any cost) toward efficiency**, which raises the question of whether the chip-demand curve flattens. Layer on Apple headlines around Mac/iPad price hikes pressuring hardware names, and you get tech-led softness.
 
-
-Why it stings: it lands on a Fed that already turned hawkish. 
-The report comes a little more than a week after the Fed and Warsh delivered what markets widely viewed as tough talk on rates and inflation; officials took off a previously indicated rate cut this year and indicated a likelihood of a hike.
- The growth complex — long duration, valuation-sensitive — is exactly what gets repriced when "higher-for-longer" turns into "maybe higher," which is why NQ (-1.55%) underperformed everything.
-
-**The two-sided tension is real, though.** The same report showed a resilient consumer: 
-personal consumption rose 0.7% for the month, above forecast, while personal income also climbed 0.7%, well above the 0.4% forecast.
- And the inflation driver itself is fading — the surge was 
-driven not just by energy's ripple effects from the Iran war but also by the ongoing pass-through of import tariffs into consumer prices.
- With WTI down 3.2% on de-escalation, that energy impulse is reversing. Note the inflation acceleration traces to a specific shock: 
-headline PCE went from roughly 2.9% in January to 4.1% in May after the Iran war, which began in late February, sent oil prices surging.
- If oil keeps sliding, the next few prints could cool — which may be why bonds rallied (yields fell) even on a hot number.
-
-On geopolitics, the picture is genuinely mixed: an Iran deal is taking shape (Reuters: IAEA inspectors granted access; IMF flags energy/commodity prices falling), yet Tehran reasserted control over Strait of Hormuz shipping after a cargo ship was hit near Oman. Crude is trading the deal, not the incident — for now.
+The two-sided counterweight: this isn't a panic. Breadth is *split*, not crashing; defensives are catching every dollar that leaves tech; and the oil-price collapse is genuinely disinflationary for the back half of the year. **WTI fell ~4%** on reports tied to an Iran nuclear deal — Reuters notes the deal grants access to nuclear inspectors, and the IMF says energy and commodity prices have eased after it (though normalization takes time). The offsetting risk: Iran reasserted its claim to control Strait of Hormuz shipping after a vessel was hit near Oman, so the geopolitical tail hasn't gone away.
 
 ## 📊 Breadth / divergence
-
-All four indices are red, but the dispersion tells the story — this isn't a broad-based washout, it's a targeted hit on rate-sensitive growth, with the Dow nearly holding the line.
+The tape is **narrow and split**, not uniformly risk-off — the headline "flat" hides a tech-specific bleed. The Nasdaq did the damage while the Dow and S&P barely moved and small caps held in better than tech.
 
 ```
-Index            %        Read
-ES  (S&P 500)   -0.64%    moderate
-YM  (Dow)       -0.23%    most resilient (value/defensive tilt)
-NQ  (Nasdaq)    -1.55%    worst — long-duration growth repriced
-RTY (Russell)   -0.77%    rate-sensitive small caps drag
+Index          Close      %chg
+S&P 500 (ES)   7417.0    -0.08%
+Dow (YM)       52289.0   -0.10%
+Nasdaq (NQ)    29479.0   -0.83%   <- the outlier
+Russell (RTY)  3023.6    -0.23%
 ```
 
-Aligned to the downside = risk-off, but the **YM vs NQ gap of ~1.3 points** is the tell: capital isn't fleeing the market wholesale, it's rotating *within* it — out of high-multiple tech into lower-duration, defensive names. That's a more orderly de-risking than a panic, but it leaves the index-level "green or red" headline misleading about what's actually happening underneath.
+When the big four don't move together — NQ down ~10x the S&P while RTY and YM are near flat — that's a fragile, single-theme tape (here, semis/AI), not a broad de-risking. Worth watching whether the weakness stays bottled up in tech or bleeds out.
 
 ## 🔁 Sector rotation (rel to SPY)
-
-"Relative to SPY" simply means: is money flowing *into* this slice faster than the broad S&P (SPY), or *out* of it? Positive = outperforming the index (rotating in); negative = lagging (rotating out). The 5-day column is the primary signal.
+"Relative to SPY" just means: how each sector did *versus the S&P 500 itself* (SPY). A positive number = it beat the index (money rotating **in**); negative = it lagged (money rotating **out**). The 5-day read is the primary signal; 1-day is noise-prone.
 
 ```
-LEADERS (rotating IN, 5d rel to SPY)
-XLV  Health Care     +4.16   1d rel +1.35
-XLU  Utilities       +4.03   1d rel +0.54
-XLI  Industrials     +3.42   1d rel +2.03
-SMH  Semiconductors  +2.97   1d rel +2.76
-
-LAGGARDS (rotating OUT, 5d rel to SPY)
-XLY  Consumer Disc   -0.95   1d rel -1.63
-ARKK Growth/spec     -1.58   1d rel -0.37
-XLC  Communications  -2.42   1d rel -1.04
-IGV  Software        -4.03   1d rel -1.78
-(SPY benchmark: 1d +0.14%, 5d -0.90%)
+SPY benchmark:           1d -0.29%   5d -1.95%
+-- ROTATING IN (5d rel) --
+XLV  Health Care         rel +8.90   (5d +6.95%)
+XLU  Utilities           rel +4.72   (5d +2.77%)
+XLRE Real Estate         rel +4.67   (5d +2.72%)
+XLP  Consumer Staples    rel +4.12   (5d +2.17%)
+-- ROTATING OUT (5d rel) --
+XLC  Communications      rel -0.68   (5d -2.63%)
+ARKK Growth/spec         rel -0.99   (5d -2.94%)
+XLK  Technology          rel -3.48   (5d -5.43%)
+SMH  Semiconductors      rel -5.42   (5d -7.37%)
 ```
 
-In plain English: **XLV = health care** and **XLU = utilities** are classic *defensive* sectors — boring, steady-cash-flow businesses investors hide in when they're nervous, and they're the two strongest groups over five days. **XLI = industrials** joining them adds a "real economy over speculation" flavor. Meanwhile **IGV = software** is the worst group by a wide margin, **XLC = communications** (think mega-cap internet/media) and **ARKK = speculative growth** are also bleeding. That's the signature of a risk-off rotation: **money leaving offense (high-multiple, long-duration growth) for defense** — exactly what you'd expect when inflation runs hot and the Fed leans toward hiking, because future-heavy growth stories are worth less when rates stay high.
-
-The standout exception is **SMH = semiconductors**, up +2.97 rel and leading the 1-day tape — chips are bucking the broader growth selloff. Part of that is an AI narrative shift: 
-OpenAI and Anthropic face a new AI reality as companies move from "tokenmaxxing" to efficiency
-, which pressures *software/SaaS* monetization (a headwind for IGV) even as it keeps demand for *hardware/compute* firm (a tailwind for SMH). The other notable laggard, **XLY = consumer discretionary**, is partly an Apple problem — the stock was hit on bigger Mac and iPad price hikes. So-what: the indices being broadly red understates how cleanly capital is sorting winners from losers here; the leadership board, not the tape color, is where the regime read lives.
+Plain English: **XLV = health care, XLU = utilities, XLRE = real estate, XLP = consumer staples — these are the classic "defensive" corners** people hide in when they want steady earnings and dividends rather than growth. **XLK = the tech sector, SMH = semiconductor chipmakers, ARKK = speculative high-growth, IGV = software** — these are the "offense." Over the past five days the market sold offense and bought defense, hard: semis are down more than 7% while health care is up nearly 7%. That's textbook **risk-off rotation**. The so-what: the S&P being only fractionally red *understates* what's happening — defensives are propping up the index while the growth engine (chips/tech) is being dismantled underneath. Rotations like this can be healthy (capital staying invested, just rotating) or an early tell that investors are bracing for slower growth. The defensive bid also lines up with falling yields, which make dividend-payers like utilities and real estate relatively more attractive.
 
 ## 📈 Macro pulse (moves, not levels)
-
-- **Yields fell despite hot inflation** — the 10Y dropped to **4.396% (-0.055)**, the 5Y to **4.153% (-0.072)**, the 30Y to **4.88% (-0.021)**. That's the counterintuitive move: a hot PCE would normally lift yields, so the bid into bonds signals either a growth-scare / flight-to-quality impulse or a bet that collapsing oil cools future inflation. Worth respecting as a bullish counterweight.
-- **VIX rose to 20.21 (+1.32)** — fear ticked up and the 20 handle is the line between calm and caution. 
-- **Term structure: contango** (VIX9D 13.93 vs VIX 20.21, spread -6.28) — normal shape, *not* the near-term-panic backwardation. **Caveat: the VIX9D reading is stale (dated 2026-06-18), so the term-structure signal is soft** — treat it as "no acute near-term fear flag confirmed" rather than a live all-clear.
-- **WTI crude -3.2% to 69.62**, range [68.96, 71.86] — the single most market-friendly move on the board, deflating the energy-driven inflation thesis even as Hormuz headlines stay noisy.
+- **Yields fell across the curve:** 10Y −0.076 to 4.375%, 5Y −0.098 to 4.127%, 30Y −0.036 to 4.865%. The belly/short end led the rally — a bond bid that's consistent with the flight into rate-sensitive defensives, and notable *because* it happened despite yesterday's hot PCE.
+- **VIX 19.27 (+0.38):** the 30-day fear gauge ticked up but is still in a middling, non-panic zone.
+- **Term structure:** VIX9D jumped **+4.11 to 18.04**, a big one-day move in near-term implied vol — but it's still *below* the 30-day VIX (spread −1.23), so the curve is in **contango (normal)**. Translation: traders bid up short-dated protection, but not enough to flip into backwardation, so this reads as positioning jitters rather than acute stress.
+- **Oil:** WTI −4.06% to ~$69, the standout macro mover, on the Iran-deal supply relief.
 
 ## 🚨 Event gate
-
-**Already released (this week):** May **PCE** dropped Thursday — headline **4.1% YoY** (met expectations, 3-year high), core **3.4% YoY** (a touch above the 3.3% whisper). The tape's reaction was a rotation, not a rout: growth down hard, defensives and semis up, yields and oil *lower*.
-
-**Today (Fri June 26):** No 8:30 ET high-impact print, but the **University of Michigan consumer sentiment final** lands at **10:00 ET** — watch the inflation-expectations components closely given the Fed's posture. For context, 
-the preliminary June reading came in at 48.9, a 9% (4.1-point) increase, beating the expected 46.1
-, but 
-year-ahead inflation expectations edged up to 4.8% and long-run expectations climbed to 3.9%
- in the prior survey — a hot expectations number would reinforce the hawkish trade.
-
-**Ahead (from the data block calendar, which is not exhaustive):**
-- **+6d — Jul 2: Employment Situation (08:30)** — the next true macro gate; a strong jobs print would feed the hike narrative.
-- **+12d — Jul 8: FOMC Minutes (14:00)** *(unverified)* — color on how committed the committee is to the hawkish dot-plot turn.
-- **+18d — Jul 14: CPI (08:30)** — the inflation confirm/deny.
-
-**Wildcards:** bullish → oil keeps falling on a firm Iran deal, easing the inflation impulse; bearish → a Hormuz shipping escalation snaps crude back up, or a hot UMich expectations print / hawkish Fed-speak hardens "hike" odds. Note BofA's view that 
-the Fed is fed up with inflation and will bring down the hammer with a series of rate hikes this year, reversing earlier cuts
- — a framing the market is now stress-testing.
+- **Already released today (June 26):** Nothing high-impact at 8:30 ET. I searched specifically — the marquee inflation print (PCE) came **yesterday, June 25** (core 3.40% y/y, headline 4.10% y/y), so today the tape is trading on rotation and headlines, not a fresh macro number.
+- **Upcoming high-impact (days out from today):**
+  - **+6d — Mon, July 2:** Employment Situation (jobs report), 08:30 ET. The next true volatility gate.
+  - **+12d — Wed, July 8:** FOMC Minutes, 14:00 ET *(unverified in the data block — treat the date as tentative).*
+  - **+18d — Tue, July 14:** CPI, 08:30 ET.
+- **Wildcards to watch:** *Bearish* — any re-escalation in the Strait of Hormuz (Iran fired on a cargo ship; UN paused an evacuation initiative) that reverses the oil drop; a deeper semis/AI-capex unwind. *Bullish* — the Iran deal continuing to push energy/commodity prices lower (disinflationary), and the defensive bid keeping the broad index orderly.
 
 ## 🧭 Regime read (generalized)
-
-Dealer positioning is **negative gamma in both SPY and QQQ** (snapshot from the **prior session's close** — options don't trade pre-market, so treat levels as a map, not a live tick). In negative-gamma regimes, dealers hedge *with* the move rather than against it, which tends to **amplify** directional pushes — breakouts and breakdowns can extend, and mean-reversion fades get punished more often than in a calm, positive-gamma tape. There's no clean gamma-flip level identified, which removes an obvious magnet.
-
-For traders mapping the day, the prior-session rails to respect: **SPY put-wall 730 / call-wall 739** with spot around 734.3 (mid-range), and **QQQ put-wall 705 / call-wall 724** with spot near 716.4. Generically, inside those walls the chop can be two-way; a decisive break of a wall in a negative-gamma tape is where momentum tends to feed on itself. With VIX back at 20 and the macro calendar loaded into next week's jobs and CPI, the environment leans *trend-and-volatility* over *calm-range* — situational awareness, not a trade.
+Both **SPY and QQQ are in negative-gamma regimes** per the dealer-gamma snapshot — and a reminder that **this GEX read is from the prior session's close; options don't trade pre-market, so the greeks are stale**. In negative gamma, dealers tend to hedge *with* the move (sell into weakness, buy into strength), which **amplifies** rather than dampens — that's the environment where trends and breakouts extend and mean-reversion fades get punished. Respect the walls: SPY (spot 732.21) sits between a **put-wall at 730 and call-wall at 736** — a tight box where a clean break either side can run; QQQ (spot 709.24) is boxed by a **put-wall at 705 and call-wall at 717**. With no printed gamma-flip level, there's no clean "back to positive" line on the board, so for traders the generic posture is: treat acceptance below the put-walls or above the call-walls as the more meaningful signal, and assume intraday moves can over-extend rather than quietly revert.
 
 ---
 *Not financial advice — situational awareness only.*
