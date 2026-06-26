@@ -14,6 +14,10 @@ on:
     - cron: "45 12 * * 1-5"
   workflow_dispatch: {}
 
+# Allow the job's GITHUB_TOKEN to commit the dated brief back to the repo.
+permissions:
+  contents: write
+
 jobs:
   brief:
     runs-on: ubuntu-latest
@@ -33,6 +37,26 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           # Optional: BRIEF_MODEL to override the writer model.
         run: python run.py --discord --skip-holidays
+      - name: Archive the brief to the repo (dated, permanent)
+        if: success()
+        run: |
+          mkdir -p morning_briefs
+          shopt -s nullglob
+          archived=0
+          for f in out/*.brief.md; do
+            base="$(basename "$f" .brief.md)"        # YYYY-MM-DD
+            cp "$f" "morning_briefs/${base}-community.md"
+            archived=1
+          done
+          if [ "$archived" = 1 ] && [ -n "$(git status --porcelain morning_briefs)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add morning_briefs
+            git commit -m "brief: archive $(date -u +%F)"
+            git push
+          else
+            echo "no new brief to archive (non-trading day or already archived)"
+          fi
       - name: Upload the brief as an artifact
         if: always()
         uses: actions/upload-artifact@v4
