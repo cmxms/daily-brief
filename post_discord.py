@@ -119,16 +119,67 @@ def _send(webhook: str, content: str) -> None:
     raise RuntimeError("Discord webhook failed after retries (429)")
 
 
-def post(brief_md: str, webhook: str | None = None) -> str:
-    webhook = (webhook or os.environ.get("DISCORD_WEBHOOK_URL", "")).strip()
-    if not webhook:
-        raise RuntimeError("missing DISCORD_WEBHOOK_URL")
-    msgs = chunk(brief_md)
+def _redact(url: str) -> str:
+    """A Discord webhook URL ends in /webhooks/<id>/<TOKEN> — never log the token."""
+    parts = url.rstrip("/").split("/")
+    return "/".join(parts[:-1] + ["****"]) if len(parts) >= 2 else "****"
+
+
+def _webhooks_from_env() -> list[str]:
+    """Collect all configured webhook URLs (multi-server fan-out). Reads DISCORD_WEBHOOK_URL
+    (the original; may itself hold several URLs) AND DISCORD_WEBHOOK_URLS (plural, for a second
+    server kept as its own secret). Either may be comma- / whitespace- / newline-separated. Order
+    preserved, duplicates dropped."""
+    import re
+    raw = " ".join(v for v in (os.environ.get("DISCORD_WEBHOOK_URL", ""),
+                               os.environ.get("DISCORD_WEBHOOK_URLS", "")) if v)
+    seen: set[str] = set()
+    out: list[str] = []
+    for u in (s.strip() for s in re.split(r"[,\s]+", raw) if s.strip()):
+        if u not in seen:
+            seen.add(u)
+            out.append(u)
+    return out
+
+
+def _post_one(webhook: str, msgs: list[str]) -> None:
+    """Send every chunk to ONE webhook, in order, with gentle pacing under the rate limit."""
     for i, m in enumerate(msgs):
         _send(webhook, m)
         if i < len(msgs) - 1:
-            time.sleep(0.7)   # gentle pacing under the webhook rate limit
-    return f"posted {len(msgs)} message(s) to Discord"
+            time.sleep(0.7)
+
+
+def post(brief_md: str, webhook: str | list[str] | None = None) -> str:
+    """Post the brief to every configured Discord webhook (fan-out to N servers).
+
+    `webhook` overrides the env (a single URL or a list); otherwise the URLs come from
+    DISCORD_WEBHOOK_URL (+ DISCORD_WEBHOOK_URLS). Each webhook is delivered independently: if one
+    server's webhook fails (deleted/expired/rate-limited out), the others still get the brief and
+    we only raise if EVERY webhook failed — so adding a friend's server can't break your own feed."""
+    if webhook is None:
+        webhooks = _webhooks_from_env()
+    elif isinstance(webhook, str):
+        webhooks = [webhook.strip()] if webhook.strip() else []
+    else:
+        webhooks = [w.strip() for w in webhook if w and w.strip()]
+    if not webhooks:
+        raise RuntimeError("missing DISCORD_WEBHOOK_URL (or DISCORD_WEBHOOK_URLS)")
+
+    msgs = chunk(brief_md)
+    ok: list[str] = []
+    failed: list[str] = []
+    for w in webhooks:
+        try:
+            _post_one(w, msgs)
+            ok.append(w)
+        except Exception as e:
+            failed.append(w)
+            print(f"  WARN Discord webhook failed ({_redact(w)}): {e}", flush=True)
+    if not ok:
+        raise RuntimeError(f"all {len(webhooks)} Discord webhook(s) failed")
+    summary = f"posted {len(msgs)} message(s) to {len(ok)}/{len(webhooks)} Discord webhook(s)"
+    return summary + (f" — {len(failed)} FAILED" if failed else "")
 
 
 if __name__ == "__main__":

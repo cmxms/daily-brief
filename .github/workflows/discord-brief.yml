@@ -39,6 +39,11 @@ jobs:
           TRADIER_API_KEY: ${{ secrets.TRADIER_API_KEY }}
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          # Optional: a 2nd server's webhook (e.g. a friend's). Set DISCORD_WEBHOOK_URLS as a repo
+          # Secret (one URL, or several comma-separated). The brief fans out to all of them; a dead
+          # webhook is skipped, not fatal. (You can also just put both URLs, comma-separated, in
+          # DISCORD_WEBHOOK_URL itself and leave this unset.)
+          DISCORD_WEBHOOK_URLS: ${{ secrets.DISCORD_WEBHOOK_URLS }}
           # Optional: BRIEF_MODEL to override the writer model.
         run: python run.py --discord --skip-holidays
       - name: Archive the brief to the repo (dated, permanent)
