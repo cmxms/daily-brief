@@ -7,11 +7,15 @@ name: discord-brief
 
 on:
   schedule:
-    # 12:45 UTC = 8:45 AM ET during EDT (summer, UTC-4). Mon-Fri only; --skip-holidays
-    # makes market-holiday runs a no-op. NOTE: in EST (winter, UTC-5) 12:45 UTC = 7:45 ET
-    # — change to "45 13 * * 1-5" when the US is on standard time. GitHub cron is best-effort
-    # and can fire a few minutes late under load (which only helps data freshness here).
-    - cron: "45 12 * * 1-5"
+    # 11:11 UTC = 7:11 AM ET during EDT (summer, UTC-4). Deliberately PRE-OPEN and early:
+    # GitHub's scheduler is best-effort and can fire anywhere from a few minutes to a couple
+    # of HOURS late under load (Fri 6/26 fired 2.5h late), so we run early to buffer against
+    # that and still land before the 9:30 ET open. This runs BEFORE the 8:30 ET data releases,
+    # so the brief PREVIEWS today's econ calendar rather than reporting actuals (see playbook).
+    # Off the top-of-hour (:00/:30) on purpose — those minutes are the most contended/delayed.
+    # Mon-Fri only; --skip-holidays no-ops market holidays. In EST (winter, UTC-5) 7:11 ET =
+    # 12:11 UTC — change to "11 12 * * 1-5" when the US is on standard time.
+    - cron: "11 11 * * 1-5"
   workflow_dispatch: {}
 
 # Allow the job's GITHUB_TOKEN to commit the dated brief back to the repo.
